@@ -8,6 +8,8 @@ RUN apt-get update \
     gosu \
     procps \
     python3 \
+    python3-pip \
+    python3-venv \
     build-essential \
     zip \
   && rm -rf /var/lib/apt/lists/*
@@ -21,6 +23,8 @@ RUN corepack enable && pnpm install --frozen-lockfile --prod
 
 COPY src ./src
 COPY --chmod=755 entrypoint.sh ./entrypoint.sh
+
+RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel
 
 RUN useradd -m -s /bin/bash openclaw \
   && chown -R openclaw:openclaw /app \
